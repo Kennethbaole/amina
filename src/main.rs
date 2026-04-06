@@ -14,10 +14,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let df = IpcReader::new(file).finish()?;
 
     // Print the first 5 rows — Some(5) because the method takes an Option<usize>
+    /*
     println!("{}", df.head(Some(5)));
     println!("Columns: {:?}", df.get_column_names());
     println!("Shape: {:?}", df.shape());
+    */
 
+    /*
     // unique neurons:
     let pre = df.column("pre_pt_root_id")?.n_unique()?;
     println!("Unique pre neurons: {pre}");
@@ -41,6 +44,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .collect()?;
         println!("{}: {} connections", region, subset.shape().0);
     }
+
+    */
+    // filter to ga_z
+    let ga_r = df.clone().lazy()
+        .filter(col("neuropil").eq(lit("GA_Z")))
+        .collect()?;
+
+    println!("Shape: {:?}", ga_r.shape()); // number of connections
+    println!("{}", ga_r.head(Some(5)));
+
+    
     
     Ok(())
 }
