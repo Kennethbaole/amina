@@ -48,13 +48,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     */
     // filter to ga_z
     let ga_r = df.clone().lazy()
-        .filter(col("neuropil").eq(lit("GA_Z")))
+        .filter(col("neuropil").eq(lit("GA_R")))
         .collect()?;
 
     println!("Shape: {:?}", ga_r.shape()); // number of connections
     println!("{}", ga_r.head(Some(5)));
 
-    
+    // unique neurons in this subset 
+    let one = ga_r.head(Some(1));
+    println!("gaba_avg:  {:?}", one.column("gaba_avg")?);
+    println!("ach_avg:   {:?}", one.column("ach_avg")?);
+
+    let pre = ga_r.column("pre_pt_root_id")?.n_unique()?;
+    let post = ga_r.column("post_pt_root_id")?.n_unique()?;
+    println!("Pre neurons: {pre}, Post Neurons: {post}");
     
     Ok(())
 }
