@@ -12,5 +12,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let ga_r = data::filter_region(&df, "GA_R")?;
     println!("GA_R shape: {:?}", ga_r.shape());
+    println!("GA_R head: {:?}", ga_r.head(Some(5)));
+
+
     Ok(())
 }
