@@ -1,6 +1,7 @@
 use std::collections::HashMap;
+use polars::prelude::*;
 
-pub fn build_graph (df: &DataFrame) -> HashMap<i64, Vec<(i64, f32)>> {
+pub fn build_graph(df: &DataFrame) -> Result<HashMap<i64, Vec<(i64, f32)>>, Box<dyn std::error::Error>> {
     let mut graph = HashMap::new();
 
     let pre_col = df.column("pre_pt_root_id")?.i64()?;
@@ -19,5 +20,5 @@ pub fn build_graph (df: &DataFrame) -> HashMap<i64, Vec<(i64, f32)>> {
     }
 
     Ok(graph)
-    
+
 }
