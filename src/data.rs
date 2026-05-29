@@ -9,7 +9,7 @@ pub fn load_connectome(path: &str) -> Result<DataFrame, Box<dyn std::error::Erro
     Ok(df)
 }
 
-// filtering by region
+// filtering by region, this returns a dataframe
 pub fn filter_region(df: &DataFrame, region: &str) -> Result<DataFrame, PolarsError> {
     let filtered = df.clone().lazy().filter(col("neuropil").eq(lit(region))).collect()?;
     Ok(filtered)
