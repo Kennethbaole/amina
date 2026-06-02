@@ -20,9 +20,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if let Some((id, inputs)) = weighted_connections.iter().next() {
         println!("Neuron {id} receives {} inputs, first few: {:?}",
-                 inputs.len(), &inputs[..inputs.len().min(5)]);
+                    inputs.len(), &inputs[..inputs.len().min(5)]);
     }
-    
+
+    let forward = graph::build_forward_graph(&ga_r)?;
+    println!("Senders in GA_R: {}", forward.len());
 
     Ok(())
 }
